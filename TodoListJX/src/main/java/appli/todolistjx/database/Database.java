@@ -49,6 +49,10 @@ public class Database {
             System.out.println("Etat de la connexion : ");
             System.out.println(cnx.isClosed()?"fermée":"ouverte \r\n");
             return cnx;
+        } catch (SQLException e) {
+            System.out.println("erreur lors de la connexion ");
+            e.printStackTrace();
+            return null;
         }
     }
 
