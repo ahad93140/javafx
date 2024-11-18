@@ -1,14 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="appli.todolistjx.InscriptionView"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="500.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="appli.accueil.RegisterController">
+    <children>
+        <!-- Titre de la page -->
+        <Label layoutX="85.0" layoutY="30.0" text="Formulaire d'inscription" textFill="#d94b5c">
+            <font>
+                <Font name="Arial" size="14.0" />
+            </font>
+        </Label>
 
+        <!-- Champ pour l'email -->
+        <Label layoutX="102.0" layoutY="100.0" text="Adresse email" />
+        <TextField fx:id="mail_insert" layoutX="60.0" layoutY="120.0" prefWidth="180.0" promptText="Entrez votre email" />
+
+        <!-- Champ pour le nom -->
+        <Label layoutX="136.0" layoutY="160.0" text="Nom" />
+        <TextField fx:id="name_insert" layoutX="60.0" layoutY="180.0" prefWidth="180.0" promptText="Entrez votre nom" />
+
+        <!-- Champ pour le prénom -->
+        <Label layoutX="129.0" layoutY="220.0" text="Prénom" />
+        <TextField fx:id="firstname_insert" layoutX="60.0" layoutY="240.0" prefWidth="180.0" promptText="Entrez votre prénom" />
+
+        <!-- Champ pour le mot de passe -->
+        <Label layoutX="114.0" layoutY="280.0" text="Mot de passe" />
+        <PasswordField fx:id="mdp_insert" layoutX="60.0" layoutY="300.0" prefWidth="180.0" promptText="Entrez votre mot de passe" />
+
+        <!-- Champ pour confirmer le mot de passe -->
+        <Label layoutX="80.0" layoutY="330.0" text="Confirmer le mot de passe" />
+        <PasswordField fx:id="mdp_confirm_insert" layoutX="60.0" layoutY="350.0" prefWidth="180.0" promptText="Confirmez votre mot de passe" />
+
+        <!-- Bouton d'inscription -->
+        <Button layoutX="90.0" layoutY="420.0" mnemonicParsing="false" onAction="#register" prefWidth="120.0" text="S'inscrire" />
+    </children>
 </AnchorPane>

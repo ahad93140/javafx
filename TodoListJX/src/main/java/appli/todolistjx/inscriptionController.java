@@ -3,38 +3,67 @@ package appli.todolistjx;
 import appli.todolistjx.repository.UtilisateurRepository;
 import javafx.scene.control.Label;
 
-private class InscriptionController {
+package appli.accueil;
 
-    private UtilisateurRepository utilisateurRepository;
-    private Label labelErreur;
+import appli.SceneController;
+import appli.model.repository.RepositoryUser;
+import appli.model.User;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
-    public InscriptionController(UtilisateurRepository utilisateurRepository, Label labelErreur) {
-        this.utilisateurRepository = utilisateurRepository;
-        this.labelErreur = labelErreur;
-    }
+import java.io.IOException;
+import java.sql.SQLException;
 
-    public void inscrireUtilisateur(String nom, String prenom, String email, String motDePasse, String motDePasseConfirmation) {
-        if (isEmpty(nom) || isEmpty(prenom) || isEmpty(email) || isEmpty(motDePasse) || isEmpty(motDePasseConfirmation)) {
-            labelErreur.setText("Tous les champs doivent être remplis !");
+public class RegisterController {
+    @FXML
+    private TextField mail_insert;
+    @FXML
+    private PasswordField mdp_insert;
+    @FXML
+    private TextField name_insert;
+    @FXML
+    private TextField firstname_insert;
+    @FXML
+    private PasswordField mdp_confirm_insert;
+
+
+    @FXML
+    public void register(ActionEvent event) throws SQLException, IOException {
+
+        if (!mdp_insert.getText().equals(mdp_confirm_insert.getText())) {
+            showAlert("Erreur", "Les mots de passe ne correspondent pas.", AlertType.ERROR);
             return;
         }
 
-        if (!motDePasse.equals(motDePasseConfirmation)) {
-            labelErreur.setText("Erreur, les mots de passe ne coïncident pas !");
-            return;
-        }
 
-        Utilisateur utilisateur = new Utilisateur(nom, prenom, email, motDePasse);
-        boolean inscrit = utilisateurRepository.inscription(utilisateur);
+        int successRegister = RepositoryUser.register(mail_insert.getText(), mdp_insert.getText(),
+                name_insert.getText(), firstname_insert.getText(), mdp_confirm_insert.getText());
 
-        if (inscrit) {
-            labelErreur.setText("Utilisateur bien ajouté !");
+
+        if (successRegister == 0) {
+            showAlert("Erreur", "L'inscription a échoué. Veuillez réessayer.", AlertType.ERROR);
         } else {
-            labelErreur.setText("Erreur lors de l'ajout !");
+
+            User user = RepositoryUser.login(mail_insert.getText(), mdp_insert.getText());
+            RepositoryUser.userConnected = user;
+
+            if (successRegister == 1) {
+                SceneController scene = new SceneController();
+                scene.switchView("home-view.fxml", event);
+            }
         }
     }
 
-    private boolean isEmpty(String value) {
-        return value == null || value.trim().isEmpty();
+
+    private void showAlert(String title, String message, AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
